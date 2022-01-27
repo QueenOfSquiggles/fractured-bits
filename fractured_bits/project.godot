@@ -41,6 +41,10 @@ _global_script_class_icons={
 config/name="fractured_bits"
 config/icon="res://icon.png"
 
+[autoload]
+
+Themes="*res://addons/ui_theme_manager/Themes.tscn"
+
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/behaviour_tree/plugin.cfg", "res://addons/game_map/plugin.cfg", "res://addons/questing/plugin.cfg", "res://addons/sound_3D_location_display/plugin.cfg", "res://addons/sound_engine/plugin.cfg", "res://addons/subtitles/plugin.cfg", "res://addons/translation_help/plugin.cfg", "res://addons/ui_theme_manager/plugin.cfg" )

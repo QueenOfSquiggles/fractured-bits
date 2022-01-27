@@ -1,8 +1,8 @@
 extends BTCompositor
 
-export (NodePath) var from_node : NodePath
-export (String) var node_property := ""
-export (String) var blackboard_key := ""
+export (NodePath) var from_node : NodePath setget set_from_node
+export (String) var node_property := "" setget set_node_prop
+export (String) var blackboard_key := "" setget set_blackboard_key
 
 onready var has_prop := $BT_Decorator/BTQ_HasProperty
 onready var load_prop := $BTA_LoadPropertyFrom
