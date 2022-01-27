@@ -8,6 +8,34 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "BTNode",
+"class": "BTCompositor",
+"language": "GDScript",
+"path": "res://addons/behaviour_tree/scripts/node_types/BTCompositor.gd"
+}, {
+"base": "BTNode",
+"class": "BTDecorator",
+"language": "GDScript",
+"path": "res://addons/behaviour_tree/scripts/node_types/BTDecorator.gd"
+}, {
+"base": "BTNode",
+"class": "BTLeaf",
+"language": "GDScript",
+"path": "res://addons/behaviour_tree/scripts/node_types/BTLeaf.gd"
+}, {
+"base": "Node",
+"class": "BTNode",
+"language": "GDScript",
+"path": "res://addons/behaviour_tree/scripts/node_types/BTNode.gd"
+} ]
+_global_script_class_icons={
+"BTCompositor": "",
+"BTDecorator": "",
+"BTLeaf": "",
+"BTNode": ""
+}
+
 [application]
 
 config/name="fractured_bits"
