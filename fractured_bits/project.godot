@@ -28,12 +28,30 @@ _global_script_classes=[ {
 "class": "BTNode",
 "language": "GDScript",
 "path": "res://addons/behaviour_tree/scripts/node_types/BTNode.gd"
+}, {
+"base": "Resource",
+"class": "Item",
+"language": "GDScript",
+"path": "res://modules/item_system/Item.gd"
+}, {
+"base": "Resource",
+"class": "ItemsContainer",
+"language": "GDScript",
+"path": "res://modules/item_system/ItemsContainer.gd"
+}, {
+"base": "Control",
+"class": "LoadingScreen",
+"language": "GDScript",
+"path": "res://modules/scene_management/LoadingScreen.gd"
 } ]
 _global_script_class_icons={
 "BTCompositor": "",
 "BTDecorator": "",
 "BTLeaf": "",
-"BTNode": ""
+"BTNode": "",
+"Item": "",
+"ItemsContainer": "",
+"LoadingScreen": ""
 }
 
 [application]
