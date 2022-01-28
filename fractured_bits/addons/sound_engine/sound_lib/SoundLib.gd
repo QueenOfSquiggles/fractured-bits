@@ -10,7 +10,11 @@ func play(sfx : String = "") -> void:
 		if node:
 			if node is AudioStreamPlayer:
 				(node as AudioStreamPlayer).stream_paused = false
-			node.play()
+			if node is KeyedAudioStreamPlayer:
+				# automagically play into the sound engine system.
+				(node as KeyedAudioStreamPlayer).play_in_engine()
+			else:
+				node.play()
 		else:
 			print("failed to find sound library or audio stream named [", sfx, "]")
 	else:
