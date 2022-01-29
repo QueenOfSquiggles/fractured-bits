@@ -29,6 +29,7 @@ func subtitle_3d(stream :KeyedAudioStreamPlayer3D, panel : PanelContainer) -> Ve
 	var result := cam.unproject_position(stream.global_transform.origin)
 	if cam.is_position_behind(pos3D):
 		result.y = viewport.size.y # force to bottom of screen
+		result.x = viewport.size.x - result.x
 	return result
 
 func fix_position(pos : Vector2, panel : PanelContainer) -> Vector2:
