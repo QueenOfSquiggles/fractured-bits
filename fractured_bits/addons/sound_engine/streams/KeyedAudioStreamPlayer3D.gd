@@ -3,6 +3,7 @@ extends AudioStreamPlayer3D
 class_name KeyedAudioStreamPlayer3D
 
 export (Resource) var keyed_sound_resource : Resource setget set_resource
+export (bool) var handle_position := true
 
 func play_in_engine(from_pos := 0.0) -> void:
 	SoundEngine.play_sound3D(self, from_pos)

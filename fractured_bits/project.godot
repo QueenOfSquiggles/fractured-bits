@@ -64,6 +64,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/sound_engine/sound_lib/SoundLib.gd"
 }, {
+"base": "Node2D",
+"class": "SoundLib2D",
+"language": "GDScript",
+"path": "res://addons/sound_engine/sound_lib/SoundLib2D.gd"
+}, {
+"base": "Spatial",
+"class": "SoundLib3D",
+"language": "GDScript",
+"path": "res://addons/sound_engine/sound_lib/SoundLib3D.gd"
+}, {
 "base": "Resource",
 "class": "SoundWithKey",
 "language": "GDScript",
@@ -81,6 +91,8 @@ _global_script_class_icons={
 "KeyedAudioStreamPlayer3D": "",
 "LoadingScreen": "",
 "SoundLib": "",
+"SoundLib2D": "",
+"SoundLib3D": "",
 "SoundWithKey": ""
 }
 
@@ -94,11 +106,25 @@ config/icon="res://icon.png"
 
 Themes="*res://addons/ui_theme_manager/Themes.tscn"
 TimeSlice="*res://addons/time_slice/TimeSlice.gd"
+Subtitles="*res://addons/subtitles/scenes/SubtitlesLayer.gd"
 SoundEngine="*res://addons/sound_engine/autoload/SoundEngine.gd"
 
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/behaviour_tree/plugin.cfg", "res://addons/game_map/plugin.cfg", "res://addons/questing/plugin.cfg", "res://addons/sound_3D_location_display/plugin.cfg", "res://addons/sound_engine/plugin.cfg", "res://addons/subtitles/plugin.cfg", "res://addons/time_slice/plugin.cfg", "res://addons/translation_help/plugin.cfg", "res://addons/ui_theme_manager/plugin.cfg" )
+
+[input]
+
+W={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+E={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":69,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
 
 [locale]
 
