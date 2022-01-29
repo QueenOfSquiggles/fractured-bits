@@ -15,6 +15,7 @@ func create_subtitle(stream, key : String) -> void:
 	if stream is AudioStreamPlayer3D:
 		pos = subtitle_3d(stream, panel)
 		pos = fix_position(pos, panel) # fix pos either way to fix erronous default positions
+		# maybe should I change this to use a timer that waits the expected length of the sound? That would fix this and prevent the gradual build-up of subtitles
 		(stream as AudioStreamPlayer3D).connect("finished", panel, "queue_free")
 	panel.rect_position = pos
 
@@ -25,7 +26,7 @@ func subtitle_3d(stream :KeyedAudioStreamPlayer3D, panel : PanelContainer) -> Ve
 	var viewport := get_tree().current_scene.get_viewport()
 	var cam :Camera= viewport.get_camera()
 	var pos3D := stream.transform.origin
-	var result := cam.unproject_position(stream.transform.origin)
+	var result := cam.unproject_position(stream.global_transform.origin)
 	if cam.is_position_behind(pos3D):
 		result.y = viewport.size.y # force to bottom of screen
 	return result
