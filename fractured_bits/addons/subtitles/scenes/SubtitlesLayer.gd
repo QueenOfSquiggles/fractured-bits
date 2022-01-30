@@ -1,17 +1,19 @@
 extends CanvasLayer
 
-
+var subtitle_theme :Theme = null # set this to customize
 var subtitle_padding_min := Vector2(20,20)
 var subtitle_padding_max := Vector2(20,20)
-
 var character_line_width_percent := 0.7
-
 var default_subtitle_position := Vector2(50, 2000) # use really big y to clamp to bottom
 # would be nice to be able to set some kind of alignment/anchoring that is customizable
 
-var character_dialogue_queue := []
 
+var character_dialogue_queue := []
 var stream_mapping := {}
+
+func _ready() -> void:
+	var sub_theme := preload("res://testing/resources/subtitle_theme.tres")
+	Subtitles.subtitle_theme = sub_theme
 
 func _process(delta: float) -> void:
 	for c in get_children():
@@ -30,6 +32,7 @@ func create_subtitle(stream, key : String) -> void:
 	var pos := default_subtitle_position
 	var panel := _subtitle_obj(key)
 	var time_remaining := 1.0
+	var theme := subtitle_theme
 	if stream is AudioStreamPlayer3D:
 		pos = subtitle_3d(stream, panel)
 		pos = fix_position(pos, panel) # fix pos either way to fix erronous default positions
@@ -38,6 +41,9 @@ func create_subtitle(stream, key : String) -> void:
 	if "time_padding" in stream:
 		# this checks if a node has a certain property
 		time_remaining += stream.time_padding
+	if "subtitle_theme" in stream:
+		if stream.subtitle_theme != null:
+			theme = stream.subtitle_theme
 	panel.rect_position = pos
 	var timer := Timer.new()
 	panel.add_child(timer)
@@ -45,6 +51,8 @@ func create_subtitle(stream, key : String) -> void:
 	timer.start(time_remaining)
 	stream_mapping[panel] = stream
 	panel.connect("tree_exiting", self, "clear_mapping", [panel])
+	if subtitle_theme:
+		panel.theme = theme
 	
 func clear_mapping(panel : PanelContainer) -> void:
 	stream_mapping.erase(panel)
