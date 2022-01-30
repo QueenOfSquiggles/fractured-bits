@@ -9,15 +9,45 @@ var character_line_width_percent := 0.7
 var default_subtitle_position := Vector2(50, 2000) # use really big y to clamp to bottom
 # would be nice to be able to set some kind of alignment/anchoring that is customizable
 
+var character_dialogue_queue := []
+
+var stream_mapping := {}
+
+func _process(delta: float) -> void:
+	for c in get_children():
+		if stream_mapping.has(c):
+			var stream = stream_mapping[c]
+			update_subtitle(c, stream)
+		
+func update_subtitle(panel : PanelContainer, stream) -> void:
+	var pos = panel.rect_position
+	if stream is AudioStreamPlayer3D:
+		pos = subtitle_3d(stream, panel)
+		pos = fix_position(pos, panel)
+	panel.rect_position = pos
+
 func create_subtitle(stream, key : String) -> void:
 	var pos := default_subtitle_position
 	var panel := _subtitle_obj(key)
+	var time_remaining := 1.0
 	if stream is AudioStreamPlayer3D:
 		pos = subtitle_3d(stream, panel)
 		pos = fix_position(pos, panel) # fix pos either way to fix erronous default positions
 		# maybe should I change this to use a timer that waits the expected length of the sound? That would fix this and prevent the gradual build-up of subtitles
-		(stream as AudioStreamPlayer3D).connect("finished", panel, "queue_free")
+		time_remaining = (stream as AudioStreamPlayer3D).stream.get_length()
+	if "time_padding" in stream:
+		# this checks if a node has a certain property
+		time_remaining += stream.time_padding
 	panel.rect_position = pos
+	var timer := Timer.new()
+	panel.add_child(timer)
+	timer.connect("timeout", panel, "queue_free")
+	timer.start(time_remaining)
+	stream_mapping[panel] = stream
+	panel.connect("tree_exiting", self, "clear_mapping", [panel])
+	
+func clear_mapping(panel : PanelContainer) -> void:
+	stream_mapping.erase(panel)
 
 func subtitle_3d(stream :KeyedAudioStreamPlayer3D, panel : PanelContainer) -> Vector2:
 	if not stream.handle_position:
