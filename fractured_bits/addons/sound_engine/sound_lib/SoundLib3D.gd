@@ -19,4 +19,5 @@ func play(sfx : String = "") -> void:
 			print("failed to find sound library or audio stream named [", sfx, "]")
 	else:
 		var child_index := randi() % get_child_count()
-		get_child(child_index).play()
+		var child := get_child(child_index)
+		play(child.name)

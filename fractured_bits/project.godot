@@ -87,7 +87,7 @@ _global_script_class_icons={
 [application]
 
 config/name="fractured_bits"
-run/main_scene="res://testing/MainTestingScene.tscn"
+run/main_scene="res://testing/subtitles_demo/SubtitlesDemoScene.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -100,6 +100,13 @@ SoundEngine="*res://addons/sound_engine/autoload/SoundEngine.gd"
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/behaviour_tree/plugin.cfg", "res://addons/game_map/plugin.cfg", "res://addons/questing/plugin.cfg", "res://addons/sound_3D_location_display/plugin.cfg", "res://addons/sound_engine/plugin.cfg", "res://addons/subtitles/plugin.cfg", "res://addons/time_slice/plugin.cfg", "res://addons/translation_help/plugin.cfg", "res://addons/ui_theme_manager/plugin.cfg" )
+
+[importer_defaults]
+
+ogg_vorbis={
+"loop": false,
+"loop_offset": 0
+}
 
 [input]
 
