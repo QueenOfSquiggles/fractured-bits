@@ -53,6 +53,7 @@ stream = ExtResource( 5 )
 script = ExtResource( 4 )
 keyed_sound_resource = ExtResource( 3 )
 handle_position = false
+time_padding = 1.5
 
 [node name="FreeLookCam" type="Camera" parent="Spatial"]
 transform = Transform( 1, 0, 0, 0, 0.936274, 0.35127, 0, -0.35127, 0.936274, 0, 4.3562, 9.73549 )

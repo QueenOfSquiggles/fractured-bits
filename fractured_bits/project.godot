@@ -29,16 +29,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/behaviour_tree/scripts/node_types/BTNode.gd"
 }, {
-"base": "Resource",
-"class": "Item",
-"language": "GDScript",
-"path": "res://modules/item_system/Item.gd"
-}, {
-"base": "Resource",
-"class": "ItemsContainer",
-"language": "GDScript",
-"path": "res://modules/item_system/ItemsContainer.gd"
-}, {
 "base": "AudioStreamPlayer",
 "class": "KeyedAudioStreamPlayer",
 "language": "GDScript",
@@ -84,8 +74,6 @@ _global_script_class_icons={
 "BTDecorator": "",
 "BTLeaf": "",
 "BTNode": "",
-"Item": "",
-"ItemsContainer": "",
 "KeyedAudioStreamPlayer": "",
 "KeyedAudioStreamPlayer2D": "",
 "KeyedAudioStreamPlayer3D": "",

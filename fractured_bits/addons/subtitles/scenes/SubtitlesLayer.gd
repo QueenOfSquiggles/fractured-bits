@@ -9,6 +9,7 @@ var default_subtitle_position := Vector2(50, 2000) # use really big y to clamp t
 
 
 var character_dialogue_queue := []
+var character_dialogue_current :PanelContainer = null
 var stream_mapping := {}
 
 func _ready() -> void:
@@ -19,13 +20,13 @@ func _process(delta: float) -> void:
 	for c in get_children():
 		if stream_mapping.has(c):
 			var stream = stream_mapping[c]
-			update_subtitle(c, stream)
-		
-func update_subtitle(panel : PanelContainer, stream) -> void:
+			_update_subtitle(c, stream)
+
+func _update_subtitle(panel : PanelContainer, stream) -> void:
 	var pos = panel.rect_position
 	if stream is AudioStreamPlayer3D:
-		pos = subtitle_3d(stream, panel)
-		pos = fix_position(pos, panel)
+		pos = _subtitle_3d(stream, panel)
+		pos = _fix_position(pos, panel)
 	panel.rect_position = pos
 
 func create_subtitle(stream, key : String) -> void:
@@ -34,8 +35,8 @@ func create_subtitle(stream, key : String) -> void:
 	var time_remaining := 1.0
 	var theme := subtitle_theme
 	if stream is AudioStreamPlayer3D:
-		pos = subtitle_3d(stream, panel)
-		pos = fix_position(pos, panel) # fix pos either way to fix erronous default positions
+		pos = _subtitle_3d(stream, panel)
+		pos = _fix_position(pos, panel) # fix pos either way to fix erronous default positions
 		# maybe should I change this to use a timer that waits the expected length of the sound? That would fix this and prevent the gradual build-up of subtitles
 		time_remaining = (stream as AudioStreamPlayer3D).stream.get_length()
 	if "time_padding" in stream:
@@ -48,16 +49,16 @@ func create_subtitle(stream, key : String) -> void:
 	var timer := Timer.new()
 	panel.add_child(timer)
 	timer.connect("timeout", panel, "queue_free")
-	timer.start(time_remaining)
+	timer.autostart = true
 	stream_mapping[panel] = stream
-	panel.connect("tree_exiting", self, "clear_mapping", [panel])
+	panel.connect("tree_exiting", self, "_clear_mapping", [panel])
 	if subtitle_theme:
 		panel.theme = theme
 	
-func clear_mapping(panel : PanelContainer) -> void:
+func _clear_mapping(panel : PanelContainer) -> void:
 	stream_mapping.erase(panel)
 
-func subtitle_3d(stream :KeyedAudioStreamPlayer3D, panel : PanelContainer) -> Vector2:
+func _subtitle_3d(stream :KeyedAudioStreamPlayer3D, panel : PanelContainer) -> Vector2:
 	if not stream.handle_position:
 		# if not set to positional sound, place in default position
 		return default_subtitle_position
@@ -70,7 +71,7 @@ func subtitle_3d(stream :KeyedAudioStreamPlayer3D, panel : PanelContainer) -> Ve
 		result.x = viewport.size.x - result.x
 	return result
 
-func fix_position(pos : Vector2, panel : PanelContainer) -> Vector2:
+func _fix_position(pos : Vector2, panel : PanelContainer) -> Vector2:
 	var result := pos
 	var viewport := get_tree().current_scene.get_viewport()
 	
@@ -114,4 +115,24 @@ func _subtitle_obj_char(char_name : String, key : String) -> PanelContainer:
 	panel.name = "Sub_" + char_name + "_" + key
 	panel.anchor_left = 0.5
 	self.add_child(panel)
+	_manage_character_dialogue(panel)
 	return panel
+
+func _manage_character_dialogue(panel : PanelContainer) -> void:
+	if character_dialogue_current == null:
+		character_dialogue_current = panel
+		character_dialogue_current.connect("tree_exiting", self, "_next_char_dialogue")
+	else:
+		panel.set_process(false)
+		panel.visible = false
+		character_dialogue_queue.append(panel)
+
+func _next_char_dialogue() -> void:
+	character_dialogue_current = null
+	if not character_dialogue_queue.empty():
+		print("Loading next character subtitle, of %d" % character_dialogue_queue.size())
+		character_dialogue_current = character_dialogue_queue[0]
+		character_dialogue_queue.remove(0)
+		character_dialogue_current.visible = true
+		character_dialogue_current.set_process(true)
+		print("character_dialogue_current = ", character_dialogue_current)
