@@ -1,4 +1,10 @@
 extends CanvasLayer
+"""
+Subtitles (SubtitlesLayer.gd)
+
+see 'create_subtitle' for core functionality
+
+"""
 
 var subtitle_theme :Theme = null # set this to customize
 var subtitle_padding_min := Vector2(20,20)
@@ -8,23 +14,20 @@ var default_subtitle_position := Vector2(50, 2000) # use really big y to clamp t
 # would be nice to be able to set some kind of alignment/anchoring that is customizable
 
 
-var character_dialogue_queue := []
-var character_dialogue_current :PanelContainer = null
-var stream_mapping := {}
-
-onready var char_subtitles := VBoxContainer.new()
+var _stream_mapping := {}
+onready var _char_subtitles := VBoxContainer.new()
 
 func _ready() -> void:
 	var sub_theme := preload("res://testing/resources/subtitle_theme.tres")
 	Subtitles.subtitle_theme = sub_theme
-	add_child(char_subtitles)
-	char_subtitles.alignment = BoxContainer.ALIGN_END
-	char_subtitles.set_anchors_preset(Control.PRESET_WIDE, true)
+	add_child(_char_subtitles)
+	_char_subtitles.alignment = BoxContainer.ALIGN_END
+	_char_subtitles.set_anchors_preset(Control.PRESET_WIDE, true)
 
 func _process(delta: float) -> void:
 	for c in get_children():
-		if stream_mapping.has(c):
-			var stream = stream_mapping[c]
+		if _stream_mapping.has(c):
+			var stream = _stream_mapping[c]
 			_update_subtitle(c, stream)
 
 func _update_subtitle(panel : PanelContainer, stream) -> void:
@@ -34,11 +37,21 @@ func _update_subtitle(panel : PanelContainer, stream) -> void:
 		pos = _fix_position(pos, panel)
 	panel.rect_position = pos
 
-func create_subtitle(stream, key : String) -> void:
+func create_subtitle(stream, key : String, override_theme : Theme = null) -> void:
+	"""
+	The main function for loading subtitles for something. Everything is functionally handled automatically. The plugin autoloads the render layer and the sound data can be passed easily using a KeyedAudioStreamPlayer. This isn't intended to be a very complex implementation for subtitles, but a solution that "just works" and is simple enough to use for a Jam game.
+	Currently positional audio subtitles are only supported for 3D environments. 2D has yet to be implemented because I mostly develop for 3D. Also 2D environments might benefit less from positional subtitles
+	Params:
+		'stream': the AudioStreamPlayer (or 2D, 3D variants)
+		'key': the subtitle key. If it includes a ':' it is assumed to be a character dialogue and the first half is treated as the character's name while the remaining is treated as the actual subtitle key
+		'override_theme': an optional override theme for special use cases
+	"""
 	var pos := default_subtitle_position
 	var panel := _subtitle_obj(key)
 	var time_remaining := 1.0
 	var theme := subtitle_theme
+	if override_theme:
+		theme = override_theme
 	if stream is AudioStreamPlayer3D:
 		pos = _subtitle_3d(stream, panel)
 		pos = _fix_position(pos, panel) # fix pos either way to fix erronous default positions
@@ -55,13 +68,13 @@ func create_subtitle(stream, key : String) -> void:
 	panel.add_child(timer)
 	timer.connect("timeout", panel, "queue_free")
 	timer.start(time_remaining)
-	stream_mapping[panel] = stream
+	_stream_mapping[panel] = stream
 	panel.connect("tree_exiting", self, "_clear_mapping", [panel])
 	if subtitle_theme:
 		panel.theme = theme
 	
 func _clear_mapping(panel : PanelContainer) -> void:
-	stream_mapping.erase(panel)
+	_stream_mapping.erase(panel)
 
 func _subtitle_3d(stream :KeyedAudioStreamPlayer3D, panel : PanelContainer) -> Vector2:
 	if not stream.handle_position:
@@ -119,5 +132,5 @@ func _subtitle_obj_char(char_name : String, key : String) -> PanelContainer:
 	panel.add_child(vbox)
 	panel.name = "Sub_" + char_name + "_" + key
 	panel.anchor_left = 0.5
-	char_subtitles.add_child(panel)
+	_char_subtitles.add_child(panel)
 	return panel
