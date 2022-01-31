@@ -12,9 +12,14 @@ var character_dialogue_queue := []
 var character_dialogue_current :PanelContainer = null
 var stream_mapping := {}
 
+onready var char_subtitles := VBoxContainer.new()
+
 func _ready() -> void:
 	var sub_theme := preload("res://testing/resources/subtitle_theme.tres")
 	Subtitles.subtitle_theme = sub_theme
+	add_child(char_subtitles)
+	char_subtitles.alignment = BoxContainer.ALIGN_END
+	char_subtitles.set_anchors_preset(Control.PRESET_WIDE, true)
 
 func _process(delta: float) -> void:
 	for c in get_children():
@@ -49,7 +54,7 @@ func create_subtitle(stream, key : String) -> void:
 	var timer := Timer.new()
 	panel.add_child(timer)
 	timer.connect("timeout", panel, "queue_free")
-	timer.autostart = true
+	timer.start(time_remaining)
 	stream_mapping[panel] = stream
 	panel.connect("tree_exiting", self, "_clear_mapping", [panel])
 	if subtitle_theme:
@@ -114,25 +119,5 @@ func _subtitle_obj_char(char_name : String, key : String) -> PanelContainer:
 	panel.add_child(vbox)
 	panel.name = "Sub_" + char_name + "_" + key
 	panel.anchor_left = 0.5
-	self.add_child(panel)
-	_manage_character_dialogue(panel)
+	char_subtitles.add_child(panel)
 	return panel
-
-func _manage_character_dialogue(panel : PanelContainer) -> void:
-	if character_dialogue_current == null:
-		character_dialogue_current = panel
-		character_dialogue_current.connect("tree_exiting", self, "_next_char_dialogue")
-	else:
-		panel.set_process(false)
-		panel.visible = false
-		character_dialogue_queue.append(panel)
-
-func _next_char_dialogue() -> void:
-	character_dialogue_current = null
-	if not character_dialogue_queue.empty():
-		print("Loading next character subtitle, of %d" % character_dialogue_queue.size())
-		character_dialogue_current = character_dialogue_queue[0]
-		character_dialogue_queue.remove(0)
-		character_dialogue_current.visible = true
-		character_dialogue_current.set_process(true)
-		print("character_dialogue_current = ", character_dialogue_current)
