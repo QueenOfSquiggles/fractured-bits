@@ -102,6 +102,7 @@ Themes="*res://addons/ui_theme_manager/Themes.tscn"
 TimeSlice="*res://addons/time_slice/TimeSlice.gd"
 Subtitles="*res://addons/subtitles/scenes/SubtitlesLayer.gd"
 SoundEngine="*res://addons/sound_engine/autoload/SoundEngine.gd"
+QuestManager="*res://addons/questing/scripts/QuestManager.gd"
 
 [editor_plugins]
 
