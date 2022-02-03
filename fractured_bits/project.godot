@@ -49,6 +49,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://modules/scene_management/LoadingScreen.gd"
 }, {
+"base": "Resource",
+"class": "Quest",
+"language": "GDScript",
+"path": "res://addons/questing/scripts/Quest.gd"
+}, {
 "base": "Node",
 "class": "SoundLib",
 "language": "GDScript",
@@ -78,6 +83,7 @@ _global_script_class_icons={
 "KeyedAudioStreamPlayer2D": "",
 "KeyedAudioStreamPlayer3D": "",
 "LoadingScreen": "",
+"Quest": "",
 "SoundLib": "",
 "SoundLib2D": "",
 "SoundLib3D": "",
@@ -99,7 +105,7 @@ SoundEngine="*res://addons/sound_engine/autoload/SoundEngine.gd"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/behaviour_tree/plugin.cfg", "res://addons/game_map/plugin.cfg", "res://addons/questing/plugin.cfg", "res://addons/sound_3D_location_display/plugin.cfg", "res://addons/sound_engine/plugin.cfg", "res://addons/subtitles/plugin.cfg", "res://addons/time_slice/plugin.cfg", "res://addons/translation_help/plugin.cfg", "res://addons/ui_theme_manager/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/behaviour_tree/plugin.cfg", "res://addons/game_map/plugin.cfg", "res://addons/questing/plugin.cfg", "res://addons/sound_engine/plugin.cfg", "res://addons/subtitles/plugin.cfg", "res://addons/time_slice/plugin.cfg", "res://addons/translation_help/plugin.cfg", "res://addons/ui_theme_manager/plugin.cfg" )
 
 [importer_defaults]
 

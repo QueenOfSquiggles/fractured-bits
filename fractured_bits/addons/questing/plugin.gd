@@ -1,10 +1,11 @@
 tool
 extends EditorPlugin
 
+const SINGLETON := "QuestManager"
 
 func _enter_tree() -> void:
-	pass
+	add_autoload_singleton(SINGLETON, "res://addons/questing/scripts/QuestManager.gd")
 
 
 func _exit_tree() -> void:
-	pass
+	remove_autoload_singleton(SINGLETON)
