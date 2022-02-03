@@ -6,7 +6,7 @@ see 'create_subtitle' for core functionality
 
 """
 
-var subtitle_theme :Theme = null # set this to customize
+var subtitle_theme :Theme = preload("res://addons/subtitles/default_theming/base_theme.tres") # set this to customize
 var subtitle_padding_min := Vector2(20,20)
 var subtitle_padding_max := Vector2(20,20)
 var character_line_width_percent := 0.7
@@ -18,8 +18,6 @@ var _stream_mapping := {}
 onready var _char_subtitles := VBoxContainer.new()
 
 func _ready() -> void:
-	var sub_theme := preload("res://testing/resources/subtitle_theme.tres")
-	Subtitles.subtitle_theme = sub_theme
 	add_child(_char_subtitles)
 	_char_subtitles.alignment = BoxContainer.ALIGN_END
 	_char_subtitles.set_anchors_preset(Control.PRESET_WIDE, true)
