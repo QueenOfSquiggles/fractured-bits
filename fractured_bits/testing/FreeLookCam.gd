@@ -9,7 +9,6 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		if event is InputEventMouseMotion:
-			#self.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY * -1))
 			self.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1))
 
 			var camera_rot = self.rotation_degrees

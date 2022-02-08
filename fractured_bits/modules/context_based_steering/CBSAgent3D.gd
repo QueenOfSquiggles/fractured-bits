@@ -120,30 +120,3 @@ func rotate_body(delta : float) -> void:
 	var target_pos := global_transform.origin + dir
 	var target := global_transform.interpolate_with(global_transform.looking_at(target_pos, Vector3.UP), steer_speed * delta)
 	global_transform = target.orthonormalized()
-
-""" don't need this right now
-func _process(_delta: float) -> void:
-	if not TimeSlice.current_process(time_slice_id_process):
-		return
-	draw_debug_info()
-
-func draw_debug_info() -> void:
-	if not GM.debug_draw:
-		return
-	var start := view_rays_root.global_transform.origin
-	for i in range(ViewRays.size()):
-		var offset := (get_dir(i)).normalized() * view_distance
-		var color = Color.green
-		if Colliding[i]:
-			color = Color.orange
-			if CollisionDistance[i] <= 0.0:
-				color = Color.red
-		GM.debug_draw.draw_line_3d(start, start+offset, 1.0, color)
-	GM.debug_draw.draw_line_3d(start, start + (steer_dir * view_distance * 0.5), 3.0 , Color.purple)
-	var offset := (poi - global_transform.origin).normalized() * 5.0
-	GM.debug_draw.draw_line_3d(start, start + offset, 2.0, Color.magenta)
-"""
-
-func on_attacked() -> void:
-	(ItemFishResource as Item).drop_into_world(global_transform.origin, get_tree().current_scene)
-	queue_free()

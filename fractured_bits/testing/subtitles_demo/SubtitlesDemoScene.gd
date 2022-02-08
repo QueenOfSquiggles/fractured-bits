@@ -12,5 +12,5 @@ func _ready() -> void:
 
 func handle_sound(stream_player, sound_key : String) -> void:
 	if sound_key != SoundEngine.DEFAULT_SOUND_KEY:
-		# note that here we could also do some logic to pass an override theme for important sounds or differentiate sounds based on the bus they go through by passing a different theme. This is all at the discretion for the user. This is the simplest implementation possible to still achieve a good looking result
+		# NOTE that here we could also do some logic to pass an override theme for important sounds or differentiate sounds based on the bus they go through by passing a different theme. This is all at the discretion for the user. This is the simplest implementation possible to still achieve a good looking result
 		Subtitles.create_subtitle(stream_player, sound_key)
