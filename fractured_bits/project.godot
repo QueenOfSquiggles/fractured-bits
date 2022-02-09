@@ -93,7 +93,7 @@ _global_script_class_icons={
 [application]
 
 config/name="fractured_bits"
-run/main_scene="res://testing/subtitles_demo/SubtitlesDemoScene.tscn"
+run/main_scene="res://modules/godot_splash_screens/splash/Splash_ConstructionLight.tscn"
 config/icon="res://icon.png"
 
 [autoload]
