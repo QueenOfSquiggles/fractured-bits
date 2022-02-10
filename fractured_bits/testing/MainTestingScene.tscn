@@ -28,8 +28,9 @@ panorama = ExtResource( 9 )
 background_mode = 2
 background_sky = SubResource( 2 )
 
-[node name="MainTestingScene" type="Node"]
+[node name="MainTestingScene" type="Spatial"]
 script = ExtResource( 1 )
+test_sample_with_key = ExtResource( 8 )
 
 [node name="Spatial" type="Spatial" parent="."]
 
@@ -62,3 +63,25 @@ script = ExtResource( 6 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 3 )
+
+[node name="Control" type="VBoxContainer" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -69.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="Control"]
+margin_top = 286.0
+margin_right = 69.0
+margin_bottom = 314.0
+
+[node name="Label" type="Label" parent="Control/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 62.0
+margin_bottom = 21.0
+text = "cool shit"
