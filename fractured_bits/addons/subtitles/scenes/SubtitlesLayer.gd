@@ -70,7 +70,14 @@ func create_subtitle(stream, key : String, override_theme : Theme = null) -> voi
 	panel.connect("tree_exiting", self, "_clear_mapping", [panel])
 	if subtitle_theme:
 		panel.theme = theme
-	
+
+func _get_dot_angle(camera: Camera, audio_source : Spatial) -> float:
+	var cam_dir := -camera.global_transform.basis.z
+	var delta_pos :Vector3 = audio_source.global_transform.origin - camera.global_transform.origin
+	var vec_a := Vector2(cam_dir.x, cam_dir.z).normalized()
+	var vec_b := Vector2(delta_pos.x, delta_pos.z).normalized()
+	return vec_a.angle_to(vec_b)
+
 func _clear_mapping(panel : PanelContainer) -> void:
 	_stream_mapping.erase(panel)
 
@@ -81,10 +88,18 @@ func _subtitle_3d(stream :KeyedAudioStreamPlayer3D, panel : PanelContainer) -> V
 	var viewport := get_tree().current_scene.get_viewport()
 	var cam :Camera= viewport.get_camera()
 	var pos3D := stream.transform.origin
+	var angle := _get_dot_angle(cam, stream)
+		
 	var result := cam.unproject_position(stream.global_transform.origin)
-	if cam.is_position_behind(pos3D):
+	if abs(angle) > deg2rad(cam.fov * 0.9):
+	#if cam.is_position_behind(pos3D):
 		result.y = viewport.size.y # force to bottom of screen
 		result.x = viewport.size.x - result.x
+		if angle < 0:
+			result.x = 0
+		else:
+			result.x = viewport.size.x
+			
 	return result
 
 func _fix_position(pos : Vector2, panel : PanelContainer) -> Vector2:

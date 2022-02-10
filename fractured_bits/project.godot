@@ -99,7 +99,7 @@ _global_script_class_icons={
 [application]
 
 config/name="fractured_bits"
-run/main_scene="res://testing/splash_sequencing/SplashScreensSequencerDemo.tscn"
+run/main_scene="res://testing/MainTestingScene.tscn"
 boot_splash/fullsize=false
 boot_splash/use_filter=false
 config/icon="res://icon.png"
