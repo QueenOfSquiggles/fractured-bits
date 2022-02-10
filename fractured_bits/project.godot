@@ -73,6 +73,11 @@ _global_script_classes=[ {
 "class": "SoundWithKey",
 "language": "GDScript",
 "path": "res://addons/sound_engine/resources/SoundWithKey.gd"
+}, {
+"base": "Node",
+"class": "Splash",
+"language": "GDScript",
+"path": "res://modules/godot_splash_screens/splash/Splash.gd"
 } ]
 _global_script_class_icons={
 "BTCompositor": "",
@@ -87,13 +92,16 @@ _global_script_class_icons={
 "SoundLib": "",
 "SoundLib2D": "",
 "SoundLib3D": "",
-"SoundWithKey": ""
+"SoundWithKey": "",
+"Splash": ""
 }
 
 [application]
 
 config/name="fractured_bits"
-run/main_scene="res://modules/godot_splash_screens/splash/Splash_ConstructionDark.tscn"
+run/main_scene="res://testing/splash_sequencing/SplashScreensSequencerDemo.tscn"
+boot_splash/fullsize=false
+boot_splash/use_filter=false
 config/icon="res://icon.png"
 
 [autoload]

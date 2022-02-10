@@ -5,7 +5,6 @@
 [sub_resource type="Animation" id=1]
 resource_name = "splash_horror"
 length = 15.0
-loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("../ViewportContainer/Viewport/Node2D/robot_head/RobotHeadTop:position")
 tracks/0/interp = 1
@@ -320,6 +319,7 @@ tracks/22/keys = {
 }
 
 [node name="Godot_Splash_Dark_Horror_Variant" instance=ExtResource( 1 )]
+animation_name = "splash_horror"
 
 [node name="AnimationPlayer" parent="ViewportContainer/Viewport/Node2D" index="4"]
 autoplay = "splash_horror"

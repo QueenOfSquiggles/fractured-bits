@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://modules/godot_splash_screens/resources/mono_dark_parts/logo_large_monochrome_dark/letter_o1.PNG" type="Texture" id=1]
 [ext_resource path="res://modules/godot_splash_screens/resources/mono_dark_parts/logo_large_monochrome_dark/subtitle_game_engine.PNG" type="Texture" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://modules/godot_splash_screens/resources/mono_dark_parts/logo_large_monochrome_dark/robot_eye_left.PNG" type="Texture" id=14]
 [ext_resource path="res://modules/godot_splash_screens/resources/audio/metal_scrape.tres" type="AudioStream" id=15]
 [ext_resource path="res://modules/godot_splash_screens/resources/audio/metal_clank.tres" type="AudioStream" id=16]
+[ext_resource path="res://modules/godot_splash_screens/splash/Splash.gd" type="Script" id=17]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -311,7 +312,6 @@ tracks/23/keys = {
 [sub_resource type="Animation" id=2]
 resource_name = "splash"
 length = 8.5
-loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("../ViewportContainer/Viewport/Node2D/robot_head/RobotHeadTop:position")
 tracks/0/interp = 1
@@ -539,6 +539,8 @@ tracks/15/keys = {
 }
 
 [node name="Godot_Splash_Dark" type="Node"]
+script = ExtResource( 17 )
+animator_path = NodePath("ViewportContainer/Viewport/Node2D/AnimationPlayer")
 
 [node name="Godot_Splash" type="Control" parent="."]
 anchor_right = 1.0
